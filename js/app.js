@@ -8,18 +8,37 @@ const Cart = function(items) {
 
 Cart.prototype.addItem = function(product, quantity) {
   // TODO: Fill in this instance method to create a new CartItem and add it to this.items
+   let newItem = new CartItem(product, quantity);
+   this.items.push(newItem);
+
 };
 
 Cart.prototype.saveToLocalStorage = function() {
+
   // TODO: Fill in this instance method to save the contents of the cart to localStorage
+   let items=JSON.stringify(this.items);
+   localStorage.setItem('cart',items);
+
+
 };
 
 Cart.prototype.removeItem = function(item) {
   // TODO: Fill in this instance method to remove one item from the cart.
+  // console.log(item);
+// for (let index = 0; index < this.items.length; index++) {
+//   if(this.items[item] === this.items[index])
+//   {
+//     console.log(this.items[index]);
+
+//     this.items.splice(item,1);
+//   }
+// }
+this.items.splice(item,1);
+
   // Note: You will have to decide what kind of parameter to pass in here!
 };
 
-const CartItem = function(product, quantity) {
+const CartItem = function(product, quantity ) {
   this.product = product;
   this.quantity = quantity;
 };
@@ -57,3 +76,22 @@ function generateCatalog() {
 
 // Initialize the app by creating the big list of products with images and names
 generateCatalog();
+
+
+
+
+// let tableEl=document.getElementById('cart');
+
+// let rawEl=document.createElement('tr');
+// tableEl.appendChild(rawEl);
+
+// let removeTdElement=document.createElement('td');
+// rawEl.appendChild(removeTdElement);
+
+// let quantityTdElement=document.createElement('td');
+// rawEl.appendChild(quantityTdElement);
+// quantityTdElement.textContent=this.quantity;
+
+// let itemTdElement=document.createElement('td');
+// rawEl.appendChild(itemTdElement);
+// itemTdElement.textContent=this.product;

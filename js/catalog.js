@@ -1,6 +1,7 @@
 /* global Product, Cart */
 
 'use strict';
+let counter=0;
 
 // Set up an empty cart for use on this page.
 const cart = new Cart([]);
@@ -11,10 +12,14 @@ function populateForm() {
 
   //TODO: Add an <option> tag inside the form's select for each product
   const selectElement = document.getElementById('items');
-  for (let i in Product.allProducts) {
+  for (let i=0; i< Product.allProducts.length;i++) {
+    let optionEl=document.createElement('option');
+    selectElement.appendChild(optionEl);
+
+   optionEl.textContent=Product.allProducts[i].name;
 
   }
-
+ 
 }
 
 // When someone submits the form, we need to add the selected item to the cart
@@ -23,6 +28,7 @@ function populateForm() {
 function handleSubmit(event) {
 
   // TODO: Prevent the page from reloading
+  event.preventDefault();
 
   // Do all the things ...
   addSelectedItemToCart();
@@ -35,17 +41,48 @@ function handleSubmit(event) {
 // TODO: Add the selected item and quantity to the cart
 function addSelectedItemToCart() {
   // TODO: suss out the item picked from the select list
+   let pickedItem = document.getElementById('items').value;
   // TODO: get the quantity
+  let quatnity =document.getElementById('quantity').value;
+
+
   // TODO: using those, add one item to the Cart
+    cart.addItem(pickedItem,quatnity);
+
 }
 
 // TODO: Update the cart count in the header nav with the number of items in the Cart
-function updateCounter() {}
+function updateCounter() {
+  ++counter;
+  let counterEl=document.getElementById('itemCount');
+
+counterEl.textContent=` (${counter})`;
+}
 
 // TODO: As you add items into the cart, show them (item & quantity) in the cart preview div
 function updateCartPreview() {
   // TODO: Get the item and quantity from the form
-  // TODO: Add a new element to the cartContents div with that information
+
+
+
+
+
+  let pickedItem = document.getElementById('items').value;
+
+  let quatnity = document.getElementById('quantity').value;
+
+
+
+let divEl=document.getElementById('cartContents');
+
+  let ulEl=document.createElement('ul');
+  divEl.appendChild(ulEl);
+
+  let liEl=document.createElement('li');
+  ulEl.appendChild(liEl);
+  
+  liEl.textContent=` ${quatnity} :  ${pickedItem}`;
+
 }
 
 // Set up the "submit" event listener on the form.
@@ -57,3 +94,7 @@ catalogForm.addEventListener('submit', handleSubmit);
 // Before anything else of value can happen, we need to fill in the select
 // drop down list in the form.
 populateForm();
+
+
+
+
